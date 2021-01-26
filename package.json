@@ -1,0 +1,26 @@
+{
+  "name": "leetcode-profile-lib",
+  "version": "1.0.0",
+  "description": "leetcode-profile-lib is used to get all your leetcode profile data as per your leetcode username",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pooja444/leetcode-profile-lib.git"
+  },
+  "author": "Pooja Kulkarni",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/Pooja444/leetcode-profile-lib/issues"
+  },
+  "homepage": "https://github.com/Pooja444/leetcode-profile-lib#readme",
+  "dependencies": {
+    "apollo-boost": "^0.4.9",
+    "graphql-tag": "^2.11.0",
+    "node-fetch": "^2.6.1",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  }
+}
