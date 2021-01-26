@@ -1,7 +1,18 @@
 {
-  "name": "leetcode-profile-lib",
+  "name": "leet-profile-lib",
   "version": "1.0.0",
-  "description": "leetcode-profile-lib is used to get all your leetcode profile data as per your leetcode username",
+  "description": "leet-profile-lib is used to get all your leetcode profile data as per your leetcode username",
+  "keywords": [
+    "leetcode",
+    "leetcodeprofile",
+    "leetcode profile",
+    "leetprofile",
+    "leet profile",
+    "leetcode profile lib",
+    "leetcode profile library",
+    "leetcode profile lib embed",
+    "leetcode profile embed"
+  ],
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
