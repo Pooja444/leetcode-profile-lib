@@ -1,6 +1,6 @@
 {
   "name": "leet-profile-lib",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "leet-profile-lib is used to get all your leetcode profile data as per your leetcode username",
   "keywords": [
     "leetcode",
@@ -33,5 +33,8 @@
     "node-fetch": "^2.6.1",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.3"
+  },
+  "devDependencies": {
+    "@types/node-fetch": "^2.5.8"
   }
 }
