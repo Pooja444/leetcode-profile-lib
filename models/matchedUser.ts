@@ -30,6 +30,10 @@ interface SubmitStats {
 }
 
 export interface MatchedUser {
+    matchedUser: User
+}
+
+export interface User {
     username: string
     socialAccounts: string
     githubUrl: string

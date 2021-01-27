@@ -1,33 +1,20 @@
-import { ApolloQueryResult } from 'apollo-boost';
-// import { Config } from './src/models/config';
 import { MatchedUser } from './models/matchedUser';
 import { getUserProfileQuery } from './graphql/profile.graphql';
 import { apolloClient } from './services/apollo.service';
-import { AllQuestionsCount } from './models/allQuestionsCount';
+import { AllQuestionsCount, Questions } from './models/allQuestionsCount';
 import { getAllQuestionsCountQuery } from './graphql/questions.graphql';
-// let config: Config = require('./config.json');
 
-export function getAllQuestionsCount(): Promise<ApolloQueryResult<AllQuestionsCount[]>> {
-    return apolloClient.query<AllQuestionsCount[]>({
+export async function getAllQuestionsCount(): Promise<AllQuestionsCount> {
+    const response = await apolloClient.query<AllQuestionsCount>({
         query: getAllQuestionsCountQuery()
     })
+    return response.data
 }
 
-export function getUserProfile(username: string): Promise<ApolloQueryResult<MatchedUser>> {
-    return apolloClient.query<MatchedUser>({
+export async function getUserProfile(username: string): Promise<MatchedUser> {
+    const response = await apolloClient.query<MatchedUser>({
         query: getUserProfileQuery(),
         variables: { "username": username }
     })
+    return response.data
 }
-
-// export const questionsData: Promise<AllQuestionsCount[]> = getAllQuestionsCount(config.username)
-//     .then((response: ApolloQueryResult<AllQuestionsCount[]>) => {
-//         console.log(response.data)
-//         return response.data
-//     })
-
-// export const profileData: Promise<MatchedUser> = getUserProfile(config.username)
-//     .then((response: ApolloQueryResult<MatchedUser>) => {
-//         console.log(response.data)
-//         return response.data
-//     })
