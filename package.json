@@ -1,6 +1,7 @@
 {
   "name": "leet-profile-lib",
-  "version": "1.0.3",
+  "version": "1.0.4",
+  "types": "index.d.ts",
   "description": "leet-profile-lib is used to get all your leetcode profile data as per your leetcode username",
   "keywords": [
     "leetcode",
@@ -13,9 +14,10 @@
     "leetcode profile lib embed",
     "leetcode profile embed"
   ],
-  "main": "index.ts",
+  "main": "dist/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "tsc"
   },
   "repository": {
     "type": "git",

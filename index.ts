@@ -1,7 +1,7 @@
 import { MatchedUser } from './models/matchedUser';
 import { getUserProfileQuery } from './graphql/profile.graphql';
 import { apolloClient } from './services/apollo.service';
-import { AllQuestionsCount, Questions } from './models/allQuestionsCount';
+import { AllQuestionsCount } from './models/allQuestionsCount';
 import { getAllQuestionsCountQuery } from './graphql/questions.graphql';
 
 export async function getAllQuestionsCount(): Promise<AllQuestionsCount> {
