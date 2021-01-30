@@ -4,7 +4,7 @@ export interface Contributions {
     testcaseCount: number,
 }
 
-interface Profile {
+export interface Profile {
     realName: string
     websites: string[]
     countryName: string
@@ -24,7 +24,7 @@ export interface SubmissionNum {
     submissions: number
 }
 
-interface SubmitStats {
+export interface SubmitStats {
     acSubmissionNum: SubmissionNum[]
     totalSubmissionNum: SubmissionNum[]
 }
