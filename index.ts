@@ -6,14 +6,14 @@ import { getAllQuestionsCountQuery } from './graphql/questions.graphql';
 
 import express from 'express';
 
-export async function getAllQuestionsCount(): Promise<AllQuestionsCount> {
+async function getAllQuestionsCount(): Promise<AllQuestionsCount> {
     const response = await apolloClient.query<AllQuestionsCount>({
         query: getAllQuestionsCountQuery()
     })
     return response.data
 }
 
-export async function getUserProfile(username: string): Promise<MatchedUser> {
+async function getUserProfile(username: string): Promise<MatchedUser> {
     const response = await apolloClient.query<MatchedUser>({
         query: getUserProfileQuery(),
         variables: { "username": username }
@@ -25,6 +25,10 @@ const app = express()
 
 app.use('/leetprofile/:user', async (req, res) => {
     res.send((await getUserProfile(req.params.user)).matchedUser)
+})
+
+app.use('/leetprofile/questions', async (req, res) => {
+    res.send((await getAllQuestionsCount()).allQuestionsCount)
 })
 
 app.listen(1100, '0.0.0.0', () => {
