@@ -22,7 +22,7 @@
     "postinstall": "npm i --save-dev @types/node-fetch && tsc",
     "watch-node": "nodemon dist/index.js",
     "watch-ts": "tsc -w",
-    "deploy": "git add . && git commit -m Heroku && git push heroku main"
+    "deploy": "git push heroku main"
   },
   "repository": {
     "type": "git",
