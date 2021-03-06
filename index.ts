@@ -28,7 +28,8 @@ app.use('/leetprofile/:user', async (req, res) => {
 })
 
 app.use('/leetprofile/questions', async (req, res) => {
-    res.send((await getAllQuestionsCount()).allQuestionsCount)
+    // res.send((await getAllQuestionsCount()).allQuestionsCount)
+    console.log(await getAllQuestionsCount())
 })
 
 const port = process.env.PORT || 1100;
