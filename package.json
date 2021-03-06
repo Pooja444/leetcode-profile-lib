@@ -15,7 +15,9 @@
     "leetcode profile embed"
   ],
   "main": "dist/index.js",
-  "engines": { "node": "15.3.0" },
+  "engines": {
+    "node": "15.3.0"
+  },
   "scripts": {
     "start": "node dist/index.js",
     "postinstall": "npm run tsc",
@@ -37,7 +39,8 @@
     "apollo-boost": "^0.4.9",
     "graphql-tag": "^2.11.0",
     "node-fetch": "^2.6.1",
-    "ts-node": "^9.1.1"
+    "ts-node": "^9.1.1",
+    "tsc": "^1.20150623.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",
