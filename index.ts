@@ -31,6 +31,6 @@ app.use('/leetprofile/questions', async (req, res) => {
     res.send((await getAllQuestionsCount()).allQuestionsCount)
 })
 
-app.listen(1100, '0.0.0.0', () => {
-    console.log('Server listening on:', 'http://0.0.0.0:1100');
+app.listen(1100, () => {
+    console.log('Server listening on: https://leetcode-profile-lib.herokuapp.com/1100');
 });
