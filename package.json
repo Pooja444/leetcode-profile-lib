@@ -19,9 +19,11 @@
     "node": "15.3.0"
   },
   "scripts": {
-    "start": "node build/index.js",
-    "build": "tsc",
-    "postinstall": "npm run build"
+    "start": "node dist/index.js",
+    "postinstall": "npm run tsc",
+    "watch-node": "nodemon dist/index.js",
+    "tsc": "tsc",
+    "watch-ts": "npm run tsc -w"
   },
   "repository": {
     "type": "git",
