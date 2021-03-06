@@ -27,7 +27,7 @@ app.use('/leetprofile/:user', async (req, res) => {
     res.send((await getUserProfile(req.params.user)).matchedUser)
 })
 
-app.use('/leetprofile/questions', async (req, res) => {
+app.use('/leetprofile-questions', async (req, res) => {
     // res.send((await getAllQuestionsCount()).allQuestionsCount)
     console.log(await getAllQuestionsCount())
 })
