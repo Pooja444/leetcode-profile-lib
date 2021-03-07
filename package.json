@@ -1,6 +1,6 @@
 {
   "name": "leet-profile-lib",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "types": "dist/index.d.ts",
   "description": "leet-profile-lib is used to get all your leetcode profile data as per your leetcode username",
   "keywords": [
