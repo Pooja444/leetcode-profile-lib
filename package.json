@@ -20,7 +20,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "postinstall": "npm install @types/node-fetch && tsc",
+    "postinstall": "npm install @types/node-fetch --save-dev && tsc",
     "watch-node": "nodemon index.js",
     "watch-ts": "tsc -w"
   },
