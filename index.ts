@@ -10,8 +10,9 @@ const app = express()
 app.use(cors())
 
 app.use('/leetprofile/:user', async (req, res) => {
+    let userResponse: UserResponse
     if (!req.params.user.match(/^[0-9A-Za-z]+$/)) {
-        const userResponse: UserResponse = {
+        userResponse = {
             isError: true,
             error: {
                 errorCode: 400,
@@ -23,7 +24,7 @@ app.use('/leetprofile/:user', async (req, res) => {
     } else {
         const user: MatchedUser = await LeetProfileService.getUserProfile(req.params.user)
         if (user == null) {
-            const userResponse: UserResponse = {
+            userResponse = {
                 isError: true,
                 error: {
                     errorCode: 404,
@@ -33,15 +34,20 @@ app.use('/leetprofile/:user', async (req, res) => {
             }
             res.send(userResponse)
         } else {
-            res.send(user.matchedUser)
+            userResponse = {
+                isError: false,
+                userProfile: user.matchedUser
+            }
+            res.send(userResponse)
         }
     }
 })
 
 app.use('/leetquestions', async (_req, res) => {
+    let questionsResponse: QuestionsResponse
     const questions: AllQuestionsCount = await LeetProfileService.getAllQuestionsCount()
     if (questions == null) {
-        const questionsResponse: QuestionsResponse = {
+        questionsResponse = {
             isError: true,
             error: {
                 errorCode: 404,
@@ -51,7 +57,11 @@ app.use('/leetquestions', async (_req, res) => {
         }
         res.send(questionsResponse)
     } else {
-        res.send(questions.allQuestionsCount)
+        questionsResponse = {
+            isError: false,
+            questions: questions.allQuestionsCount
+        }
+        res.send(questionsResponse)
     }
 })
 

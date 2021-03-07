@@ -1,5 +1,5 @@
-import { AllQuestionsCount } from "./allQuestionsCount";
-import { MatchedUser } from "./matchedUser";
+import { AllQuestionsCount, Questions } from "./allQuestionsCount";
+import { MatchedUser, User } from "./matchedUser";
 
 interface ErrorResponse {
     errorCode: number
@@ -9,11 +9,11 @@ interface ErrorResponse {
 export interface UserResponse {
     isError: boolean
     error?: ErrorResponse
-    userProfile: MatchedUser
+    userProfile: User
 }
 
 export interface QuestionsResponse {
     isError: boolean
     error?: ErrorResponse
-    questions: AllQuestionsCount
+    questions: Questions[]
 }
