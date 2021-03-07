@@ -1,38 +1,49 @@
 import { MatchedUser } from './models/matchedUser'
-import { getUserProfileQuery } from './graphql/profile.graphql'
-import { apolloClient } from './services/apollo.service'
 import { AllQuestionsCount } from './models/allQuestionsCount'
-import { getAllQuestionsCountQuery } from './graphql/questions.graphql'
 
 import express from 'express'
 import cors from 'cors'
-
-async function getAllQuestionsCount(): Promise<AllQuestionsCount> {
-    const response = await apolloClient.query<AllQuestionsCount>({
-        query: getAllQuestionsCountQuery()
-    })
-    return response.data
-}
-
-async function getUserProfile(username: string): Promise<MatchedUser> {
-    const response = await apolloClient.query<MatchedUser>({
-        query: getUserProfileQuery(),
-        variables: { "username": username }
-    })
-    return response.data
-}
+import { QuestionsResponse, UserResponse } from './models/response'
+import { LeetProfileService } from './services/leetprofile.service'
 
 const app = express()
 app.use(cors())
-const port = process.env.PORT || 1100
 
 app.use('/leetprofile/:user', async (req, res) => {
-    res.send((await getUserProfile(req.params.user)).matchedUser)
+    const user: MatchedUser = await LeetProfileService.getUserProfile(req.params.user)
+    if (user == null) {
+        const userResponse: UserResponse = {
+            isError: true,
+            error: {
+                errorCode: 404,
+                errorMessage: "User not found!"
+            },
+            userProfile: null
+        }
+        res.send(userResponse)
+    } else {
+        res.send(user.matchedUser)
+    }
 })
 
-app.use('/leetprofile-questions', async (req, res) => {
-    res.send((await getAllQuestionsCount()).allQuestionsCount)
+app.use('/leetprofile-questions', async (_req, res) => {
+    const questions: AllQuestionsCount = await LeetProfileService.getAllQuestionsCount()
+    if (questions == null) {
+        const questionsResponse: QuestionsResponse = {
+            isError: true,
+            error: {
+                errorCode: 404,
+                errorMessage: "No questions found!"
+            },
+            questions: null
+        }
+        res.send(questionsResponse)
+    } else {
+        res.send(questions.allQuestionsCount)
+    }
 })
+
+const port = process.env.PORT || 1100
 
 app.listen(port, () => {
     console.log('Server listening on: https://leetcode-profile-lib.herokuapp.com/1100')
