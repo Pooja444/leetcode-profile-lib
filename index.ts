@@ -9,7 +9,7 @@ import { LeetProfileService } from './services/leetprofile.service'
 const app = express()
 app.use(cors())
 
-export const getLeetUserProfile = async (req: { params: { user: any } }, res: { send: (arg0: UserResponse) => void }) => {
+export const getLeetUserProfile = async (req, res) => {
     let userResponse: UserResponse
     const username = req.params.user
     if (!username.match(/^[0-9A-Za-z]+$/)) {
@@ -44,7 +44,7 @@ export const getLeetUserProfile = async (req: { params: { user: any } }, res: { 
     }
 }
 
-export const getLeetQuestionsCount = async (_req: any, res: { send: (arg0: QuestionsResponse) => void }) => {
+export const getLeetQuestionsCount = async (req, res) => {
     let questionsResponse: QuestionsResponse
     const questions: AllQuestionsCount = await LeetProfileService.getAllQuestionsCount()
     if (questions == null) {
