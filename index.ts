@@ -10,23 +10,35 @@ const app = express()
 app.use(cors())
 
 app.use('/leetprofile/:user', async (req, res) => {
-    const user: MatchedUser = await LeetProfileService.getUserProfile(req.params.user)
-    if (user == null) {
+    if (!req.params.user.match(/^[0-9A-Za-z]+$/)) {
         const userResponse: UserResponse = {
             isError: true,
             error: {
-                errorCode: 404,
-                errorMessage: "User not found!"
+                errorCode: 400,
+                errorMessage: "Username can only contain digits or alphabets"
             },
             userProfile: null
         }
         res.send(userResponse)
     } else {
-        res.send(user.matchedUser)
+        const user: MatchedUser = await LeetProfileService.getUserProfile(req.params.user)
+        if (user == null) {
+            const userResponse: UserResponse = {
+                isError: true,
+                error: {
+                    errorCode: 404,
+                    errorMessage: "User not found!"
+                },
+                userProfile: null
+            }
+            res.send(userResponse)
+        } else {
+            res.send(user.matchedUser)
+        }
     }
 })
 
-app.use('/leetprofile-questions', async (_req, res) => {
+app.use('/leetquestions', async (_req, res) => {
     const questions: AllQuestionsCount = await LeetProfileService.getAllQuestionsCount()
     if (questions == null) {
         const questionsResponse: QuestionsResponse = {
@@ -46,5 +58,5 @@ app.use('/leetprofile-questions', async (_req, res) => {
 const port = process.env.PORT || 1100
 
 app.listen(port, () => {
-    console.log('Server listening on: https://leetcode-profile-lib.herokuapp.com/1100')
+    console.log('Server listening on port 1100')
 })
