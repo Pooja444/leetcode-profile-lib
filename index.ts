@@ -9,7 +9,7 @@ import { LeetProfileService } from './services/leetprofile.service'
 const app = express()
 app.use(cors())
 
-app.use('/leetprofile/:user', async (req, res) => {
+export async function getLeetUserProfile(req: { params: { user: any } }, res: { send: (arg0: UserResponse) => void }) {
     let userResponse: UserResponse
     const username = req.params.user
     if (!username.match(/^[0-9A-Za-z]+$/)) {
@@ -42,9 +42,9 @@ app.use('/leetprofile/:user', async (req, res) => {
             res.send(userResponse)
         }
     }
-})
+}
 
-app.use('/leetquestions', async (_req, res) => {
+export async function getLeetQuestions(_req: any, res: { send: (arg0: QuestionsResponse) => void }) {
     let questionsResponse: QuestionsResponse
     const questions: AllQuestionsCount = await LeetProfileService.getAllQuestionsCount()
     if (questions == null) {
@@ -64,9 +64,13 @@ app.use('/leetquestions', async (_req, res) => {
         }
         res.send(questionsResponse)
     }
-})
+}
 
-const port = process.env.PORT || 1100
+app.use('/leetprofile/:user', getLeetUserProfile)
+
+app.use('/leetquestions', getLeetQuestions)
+
+const port = process.env.LEET_PORT || 1100
 
 app.listen(port, () => {
     console.log('Server listening on port 1100')
