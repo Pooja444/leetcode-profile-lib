@@ -1,13 +1,8 @@
 import { MatchedUser } from './models/matchedUser'
 import { AllQuestionsCount } from './models/allQuestionsCount'
 
-import express from 'express'
-import cors from 'cors'
 import { QuestionsResponse, UserResponse } from './models/response'
 import { LeetProfileService } from './services/leetprofile.service'
-
-const app = express()
-app.use(cors())
 
 export async function getLeetUserProfile(req: { params: { user: any } }, res: { send: (arg0: UserResponse) => void }) {
     let userResponse: UserResponse
@@ -65,12 +60,3 @@ export async function getLeetQuestionsCount(req: any, res: { send: (arg0: Questi
         res.send(questionsResponse)
     }
 }
-
-app.get('/leetprofile/:user', getLeetUserProfile)
-app.get('/leetquestions', getLeetQuestionsCount)
-
-const port = process.env.PORT || 1100
-
-app.listen(port, () => {
-    console.log('Server listening on port 1100')
-})
