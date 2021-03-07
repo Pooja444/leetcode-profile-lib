@@ -44,7 +44,7 @@ export async function getLeetUserProfile(req, res) {
     }
 }
 
-export async function getLeetQuestionsCount(req, res){
+export async function getLeetQuestionsCount(req, res) {
     let questionsResponse: QuestionsResponse
     const questions: AllQuestionsCount = await LeetProfileService.getAllQuestionsCount()
     if (questions == null) {
@@ -67,10 +67,9 @@ export async function getLeetQuestionsCount(req, res){
 }
 
 app.get('/leetprofile/:user', getLeetUserProfile)
-
 app.get('/leetquestions', getLeetQuestionsCount)
 
-const port = process.env.LEET_PORT || 1100
+const port = process.env.PORT || 1100
 
 app.listen(port, () => {
     console.log('Server listening on port 1100')
