@@ -11,24 +11,25 @@ app.use(cors())
 
 app.use('/leetprofile/:user', async (req, res) => {
     let userResponse: UserResponse
-    if (!req.params.user.match(/^[0-9A-Za-z]+$/)) {
+    const username = req.params.user
+    if (!username.match(/^[0-9A-Za-z]+$/)) {
         userResponse = {
             isError: true,
             error: {
                 errorCode: 400,
-                errorMessage: "Username can only contain digits or alphabets"
+                errorMessage: `Invalid username ${username}. Username can only contain digits or alphabets`
             },
             userProfile: null
         }
         res.send(userResponse)
     } else {
-        const user: MatchedUser = await LeetProfileService.getUserProfile(req.params.user)
+        const user: MatchedUser = await LeetProfileService.getUserProfile(username)
         if (user == null) {
             userResponse = {
                 isError: true,
                 error: {
                     errorCode: 404,
-                    errorMessage: "User not found!"
+                    errorMessage: `Leetcode user for username ${username} not found!`
                 },
                 userProfile: null
             }
@@ -51,7 +52,7 @@ app.use('/leetquestions', async (_req, res) => {
             isError: true,
             error: {
                 errorCode: 404,
-                errorMessage: "No questions found!"
+                errorMessage: "No leetcode questions found!"
             },
             questions: null
         }
