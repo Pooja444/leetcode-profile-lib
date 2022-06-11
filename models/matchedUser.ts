@@ -33,6 +33,11 @@ export interface MatchedUser {
     matchedUser: User
 }
 
+export interface ProblemsSolvedBeatsStats {
+    difficulty: string
+    percentage: number
+}
+
 export interface User {
     username: string
     socialAccounts: string
@@ -40,4 +45,5 @@ export interface User {
     contributions: Contributions[]
     profile: Profile
     submitStats: SubmitStats
+    problemsSolvedBeatsStats: ProblemsSolvedBeatsStats
 }

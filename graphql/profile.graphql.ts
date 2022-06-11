@@ -27,6 +27,10 @@ export function getUserProfileQuery(): DocumentNode {
                         ranking
                     }
                     submissionCalendar
+                    problemsSolvedBeatsStats {
+                        difficulty
+                        percentage
+                    }
                     submitStats {
                         acSubmissionNum {          
                             difficulty
