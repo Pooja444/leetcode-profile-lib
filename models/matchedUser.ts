@@ -45,5 +45,5 @@ export interface User {
     contributions: Contributions[]
     profile: Profile
     submitStats: SubmitStats
-    problemsSolvedBeatsStats: ProblemsSolvedBeatsStats
+    problemsSolvedBeatsStats: ProblemsSolvedBeatsStats[]
 }
