@@ -1,3 +1,4 @@
+import { ErrorResponse } from "../error";
 import { PageInfo } from "../page-info";
 import { PostNodeDetail } from "../post-node-detail";
 
@@ -17,4 +18,10 @@ export interface Solutions {
 
 export interface UserSolutionTopics {
     userSolutionTopics: Solutions
+}
+
+export interface SolutionsResponse {
+    isError: boolean
+    error?: ErrorResponse
+    solutions: Solutions
 }

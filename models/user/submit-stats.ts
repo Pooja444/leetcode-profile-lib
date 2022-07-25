@@ -1,23 +1,25 @@
-export interface AcSubmissionNum {
+import { ErrorResponse } from "../error";
+
+export interface SubmissionNum {
     difficulty: string
     count: number
     submissions: number
 }
 
-export interface ProblemsSolvedBeatsStats {
-    difficulty: string
-    percentage: number
+export interface AcSubmissionNum {
+    acSubmissionNum: SubmissionNum[]
 }
 
 export interface SubmitStats {
-    acSubmissionNum: AcSubmissionNum[]
-}
-
-export interface SubmitAndProblemStats {
-    submitStats: SubmitStats
-    problemsSolvedBeatsStats: ProblemsSolvedBeatsStats
+    submitStats: AcSubmissionNum
 }
 
 export interface SubmitStatsMatchedUser {
-    matchedUser: SubmitAndProblemStats
+    matchedUser: SubmitStats
+}
+
+export interface SubmitStatsResponse {
+    isError: boolean
+    error?: ErrorResponse
+    submitStats: AcSubmissionNum
 }

@@ -1,3 +1,5 @@
+import { ErrorResponse } from "../error";
+
 export interface MedalConfig {
     iconGif: string
     iconGifBackground: string
@@ -26,11 +28,17 @@ export interface UpcomingBadge {
     progress: number
 }
 
-export interface BadgesMatchedUser {
-    matchedUser: Badges
-}
-
-export interface Badges {
+export interface BadgeTypes {
     badges: Badge[]
     upcomingBadges: UpcomingBadge[]
+}
+
+export interface BadgesMatchedUser {
+    matchedUser: BadgeTypes
+}
+
+export interface BadgeResponse {
+    isError: boolean
+    error?: ErrorResponse
+    badgeTypes: BadgeTypes
 }

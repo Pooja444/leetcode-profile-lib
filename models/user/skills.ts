@@ -1,3 +1,5 @@
+import { ErrorResponse } from "../error";
+
 export interface TagDetail {
     tagName: string
     tagSlug: string
@@ -16,4 +18,10 @@ export interface TagProblemCounts {
 
 export interface SkillsMatchedUser {
     matchedUser: TagProblemCounts
+}
+
+export interface SkillsResponse {
+    isError: boolean
+    error?: ErrorResponse
+    skills: TagProblemCount
 }

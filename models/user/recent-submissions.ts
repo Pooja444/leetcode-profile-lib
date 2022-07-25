@@ -1,3 +1,5 @@
+import { ErrorResponse } from "../error";
+
 export interface RecentSubmissions {
     id: string
     title: string
@@ -7,4 +9,10 @@ export interface RecentSubmissions {
 
 export interface RecentSubmissionsAcList {
     recentAcSubmissionList: RecentSubmissions[]
+}
+
+export interface RecentSubmissionsResponse {
+    isError: boolean
+    error?: ErrorResponse
+    recentSubmissions: RecentSubmissions[]
 }

@@ -1,3 +1,5 @@
+import { ErrorResponse } from "../error";
+
 export interface DccBadgeDetail {
     name: string
     icon: string
@@ -16,10 +18,16 @@ export interface Calendar {
     submissionCalendar: string
 }
 
+export interface UserCalendar {
+    userCalendar: Calendar
+}
+
 export interface CalendarMatchedUser {
     matchedUser: UserCalendar
 }
 
-export interface UserCalendar {
-    userCalendar: Calendar
+export interface CalendarResponse {
+    isError: boolean
+    error?: ErrorResponse
+    calendar: Calendar
 }

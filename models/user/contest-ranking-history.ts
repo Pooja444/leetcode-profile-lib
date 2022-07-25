@@ -1,3 +1,5 @@
+import { ErrorResponse } from "../error";
+
 export interface Contest {
     title: string
     startTime: number
@@ -16,4 +18,10 @@ export interface ContestRankingHistory {
 
 export interface UserContestRankingHistory {
     userContestRankingHistory: ContestRankingHistory[]
+}
+
+export interface ContestRankingHistoryResponse {
+    isError: boolean
+    error?: ErrorResponse
+    contestRankingHistory: ContestRankingHistory[]
 }

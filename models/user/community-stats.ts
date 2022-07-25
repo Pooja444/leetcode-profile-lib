@@ -1,3 +1,5 @@
+import { ErrorResponse } from "../error";
+
 export interface CommunityStats {
     reputation: number
     reputationDiff: number
@@ -9,10 +11,16 @@ export interface CommunityStats {
     categoryDiscussCountDiff: number
 }
 
+export interface CommunityStatsProfile {
+    profile: CommunityStats
+}
+
 export interface CommunityStatsMatchedUser {
     matchedUser: CommunityStatsProfile
 }
 
-export interface CommunityStatsProfile {
-    profile: CommunityStats
+export interface CommunityStatsResponse {
+    isError: boolean
+    error?: ErrorResponse
+    communityStats: CommunityStats
 }

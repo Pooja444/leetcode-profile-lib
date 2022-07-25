@@ -1,3 +1,4 @@
+import { ErrorResponse } from "../error";
 import { PageInfo } from "../page-info";
 import { PostNodeDetail } from "../post-node-detail";
 
@@ -16,4 +17,10 @@ export interface Discussions {
 
 export interface UserCategoryTopics {
     userCategoryTopics: Discussions
+}
+
+export interface DiscussionsResponse {
+    isError: boolean
+    error?: ErrorResponse
+    discussions: Discussions
 }

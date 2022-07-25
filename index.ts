@@ -4,39 +4,26 @@ import { AllQuestionsCount } from './models-old/allQuestionsCount'
 import { QuestionsResponse, UserResponse } from './models-old/response'
 import { LeetProfileService } from './services/leetprofile.service'
 
-export async function getLeetUserProfile(req: { params: { user: any } }, res: { send: (arg0: UserResponse) => void }) {
-    let userResponse: UserResponse
-    const username = req.params.user
-    if (!username.match(/^[0-9A-Za-z]+$/)) {
-        userResponse = {
-            isError: true,
-            error: {
-                errorCode: 400,
-                errorMessage: `Invalid username ${username}. Username can only contain digits or alphabets`
-            },
-            userProfile: null
-        }
-        res.send(userResponse)
-    } else {
-        const user: MatchedUser = await LeetProfileService.getUserProfile(username)
-        if (user == null) {
-            userResponse = {
-                isError: true,
-                error: {
-                    errorCode: 404,
-                    errorMessage: `Leetcode user for username ${username} not found!`
-                },
-                userProfile: null
-            }
-            res.send(userResponse)
-        } else {
-            userResponse = {
-                isError: false,
-                userProfile: user.matchedUser
-            }
-            res.send(userResponse)
-        }
-    }
+// Delete below imports later
+import express from 'express'
+import cors from 'cors'
+import { BadgeResponse } from './models/user/badges'
+import { UserService } from './services/user.service'
+import { CalendarResponse } from './models/user/calendar'
+
+export async function getUserBadges(req: { params: { username: string } }, res: { send: (arg0: BadgeResponse) => void }) {
+    const badgeResponse: BadgeResponse = await UserService.getUserBadges(req.params.username)
+    res.send(badgeResponse)
+}
+
+export async function getUserCalendarWithoutYear(req: { params: { username: string } }, res: { send: (arg0: CalendarResponse) => void }) {
+    const calendarResponse: CalendarResponse = await UserService.getUserCalendar(req.params.username)
+    res.send(calendarResponse)
+}
+
+export async function getUserCalendarWithYear(req: { params: { username: string, year: number } }, res: { send: (arg0: CalendarResponse) => void }) {
+    const calendarResponse: CalendarResponse = await UserService.getUserCalendar(req.params.username, req.params.year)
+    res.send(calendarResponse)
 }
 
 export async function getLeetQuestionsCount(req: any, res: { send: (arg0: QuestionsResponse) => void }) {
@@ -60,3 +47,19 @@ export async function getLeetQuestionsCount(req: any, res: { send: (arg0: Questi
         res.send(questionsResponse)
     }
 }
+
+
+// Delete below code later
+
+const app = express()
+
+app.use(cors())
+app.get('/user/:username/badges', getUserBadges)
+app.get('/user/:username/calendar', getUserCalendarWithoutYear)
+app.get('/user/:username/calendar/:year', getUserCalendarWithYear)
+
+const port = 3200
+
+app.listen(port, () => {
+    console.log('Listening on server https://localhost:3200/')
+})

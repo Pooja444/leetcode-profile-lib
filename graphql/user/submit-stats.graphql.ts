@@ -12,10 +12,6 @@ export function getUserSubmitStatsQuery(): DocumentNode {
                             submissions
                         }
                     }
-                    problemsSolvedBeatsStats {
-                        difficulty
-                        percentage
-                    }
                 }
             }
         `

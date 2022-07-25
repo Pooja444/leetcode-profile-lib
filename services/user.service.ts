@@ -1,11 +1,9 @@
-import { getUserProfileQuery } from "../graphql/user/profile.graphql"
-import { getAllQuestionsCountQuery } from "../graphql/questions/questions.graphql"
-import { AllQuestionsCount } from "../models-old/allQuestionsCount"
-import { MatchedUser } from "../models-old/matchedUser"
 import { apolloClient } from "./apollo.service"
 import { BadgeResponse, BadgesMatchedUser } from "../models/user/badges"
 import { ErrorResponse } from "../models/error"
 import { getUserBadgesQuery } from "../graphql/user/badges.graphql"
+import { CalendarMatchedUser, CalendarResponse } from "../models/user/calendar"
+import { getUserCalendarQuery } from "../graphql/user/calendar.graphql"
 
 function getInvalidUsernameErrorResponse(username: string): ErrorResponse {
     let errorResponse: ErrorResponse
@@ -19,7 +17,7 @@ function getInvalidUsernameErrorResponse(username: string): ErrorResponse {
     return null
 }
 
-export class LeetProfileService {
+export class UserService {
     static async getUserBadges(username: string): Promise<BadgeResponse> {
         const invalidUsernameResponse = getInvalidUsernameErrorResponse(username)
         if (invalidUsernameResponse !== null) {
@@ -54,22 +52,38 @@ export class LeetProfileService {
         return badgeResponse
     }
 
-    static async getAllQuestionsCount(): Promise<AllQuestionsCount> {
-        const response = await apolloClient.query<AllQuestionsCount>({
-            query: getAllQuestionsCountQuery()
+    static async getUserCalendar(username: string, year?: number): Promise<CalendarResponse> {
+        const invalidUsernameResponse = getInvalidUsernameErrorResponse(username)
+        if (invalidUsernameResponse !== null) {
+            return {
+                isError: true,
+                error: invalidUsernameResponse,
+                calendar: null
+            }
+        }
+        let calendarResponse: CalendarResponse
+        const response: { data: CalendarMatchedUser } = await apolloClient.query<CalendarMatchedUser>({
+            query: getUserCalendarQuery(),
+            variables: year === undefined ? { "username": username } : { "username": username, "year": year }
+        }).catch(err => {
+            calendarResponse = {
+                isError: true,
+                error: {
+                    errorCode: 500,
+                    errorMessage: `An error occurred while retrieving user calendar - ${err}. Please inform the developer.`
+                },
+                calendar: null
+            }
+            return null
         })
-        return response.data
-    }
-
-    static async getUserProfile(username: string): Promise<MatchedUser> {
-        const response = await apolloClient.query<MatchedUser>({
-            query: getUserProfileQuery(),
-            variables: { "username": username }
-        })
-            .catch(err => {
-                return err
-            })
-        return response.data
+        if (calendarResponse === undefined) {
+            calendarResponse = {
+                isError: false,
+                error: null,
+                calendar: response.data.matchedUser.userCalendar
+            }
+        }
+        return calendarResponse
     }
 
 }
