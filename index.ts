@@ -1,7 +1,6 @@
-import { MatchedUser } from './models-old/matchedUser'
 import { AllQuestionsCount } from './models-old/allQuestionsCount'
 
-import { QuestionsResponse, UserResponse } from './models-old/response'
+import { QuestionsResponse } from './models-old/response'
 import { LeetProfileService } from './services/leetprofile.service'
 
 // Delete below imports later
