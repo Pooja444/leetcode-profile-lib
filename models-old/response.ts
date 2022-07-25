@@ -1,5 +1,5 @@
-import { AllQuestionsCount, Questions } from "./allQuestionsCount";
-import { MatchedUser, User } from "./matchedUser";
+import { Questions } from "./allQuestionsCount";
+import { User } from "./matchedUser";
 
 interface ErrorResponse {
     errorCode: number

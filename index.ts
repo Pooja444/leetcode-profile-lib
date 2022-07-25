@@ -1,7 +1,7 @@
-import { MatchedUser } from './models/matchedUser'
-import { AllQuestionsCount } from './models/allQuestionsCount'
+import { MatchedUser } from './models-old/matchedUser'
+import { AllQuestionsCount } from './models-old/allQuestionsCount'
 
-import { QuestionsResponse, UserResponse } from './models/response'
+import { QuestionsResponse, UserResponse } from './models-old/response'
 import { LeetProfileService } from './services/leetprofile.service'
 
 export async function getLeetUserProfile(req: { params: { user: any } }, res: { send: (arg0: UserResponse) => void }) {

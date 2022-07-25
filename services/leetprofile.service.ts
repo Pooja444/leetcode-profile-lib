@@ -1,7 +1,7 @@
-import { getUserProfileQuery } from "../graphql/profile.graphql"
-import { getAllQuestionsCountQuery } from "../graphql/questions.graphql"
-import { AllQuestionsCount } from "../models/allQuestionsCount"
-import { MatchedUser } from "../models/matchedUser"
+import { getUserProfileQuery } from "../graphql/user/profile.graphql"
+import { getAllQuestionsCountQuery } from "../graphql/questions/questions.graphql"
+import { AllQuestionsCount } from "../models-old/allQuestionsCount"
+import { MatchedUser } from "../models-old/matchedUser"
 import { apolloClient } from "./apollo.service"
 
 export class LeetProfileService {
