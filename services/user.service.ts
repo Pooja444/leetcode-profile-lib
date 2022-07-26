@@ -4,6 +4,12 @@ import { ErrorResponse } from "../models/error"
 import { getUserBadgesQuery } from "../graphql/user/badges.graphql"
 import { CalendarMatchedUser, CalendarResponse } from "../models/user/calendar"
 import { getUserCalendarQuery } from "../graphql/user/calendar.graphql"
+import { CommunityStatsMatchedUser, CommunityStatsResponse } from "../models/user/community-stats"
+import { getUserCommunityStatsQuery } from "../graphql/user/community-stats.graphql"
+import { ContestRankingHistoryResponse, UserContestRankingHistory } from "../models/user/contest-ranking-history"
+import { getUserContestRankingHistoryQuery } from "../graphql/user/contest-ranking-history.graphql"
+import { ContestRankingResponse, UserContestRanking } from "../models/user/contest-ranking"
+import { getUserContestRankingQuery } from "../graphql/user/contest-ranking.graphql"
 
 function getInvalidUsernameErrorResponse(username: string): ErrorResponse {
     let errorResponse: ErrorResponse
@@ -19,7 +25,7 @@ function getInvalidUsernameErrorResponse(username: string): ErrorResponse {
 
 export class UserService {
     static async getUserBadges(username: string): Promise<BadgeResponse> {
-        const invalidUsernameResponse = getInvalidUsernameErrorResponse(username)
+        const invalidUsernameResponse: ErrorResponse = getInvalidUsernameErrorResponse(username)
         if (invalidUsernameResponse !== null) {
             return {
                 isError: true,
@@ -53,7 +59,7 @@ export class UserService {
     }
 
     static async getUserCalendar(username: string, year?: number): Promise<CalendarResponse> {
-        const invalidUsernameResponse = getInvalidUsernameErrorResponse(username)
+        const invalidUsernameResponse: ErrorResponse = getInvalidUsernameErrorResponse(username)
         if (invalidUsernameResponse !== null) {
             return {
                 isError: true,
@@ -84,6 +90,108 @@ export class UserService {
             }
         }
         return calendarResponse
+    }
+
+    static async getUserCommunityStats(username: string): Promise<CommunityStatsResponse> {
+        const invalidUsernameResponse: ErrorResponse = getInvalidUsernameErrorResponse(username)
+        if (invalidUsernameResponse !== null) {
+            return {
+                isError: true,
+                error: invalidUsernameResponse,
+                communityStats: null
+            }
+        }
+        let communityStatsResponse: CommunityStatsResponse
+        const response: { data: CommunityStatsMatchedUser } = await apolloClient.query<CommunityStatsMatchedUser>({
+            query: getUserCommunityStatsQuery(),
+            variables: { "username": username }
+        }).catch(err => {
+            communityStatsResponse = {
+                isError: true,
+                error: {
+                    errorCode: 500,
+                    errorMessage: `An error occurred while retrieving user community stats - ${err}. Please inform the developer.`
+                },
+                communityStats: null
+            }
+            return null
+        })
+        if (communityStatsResponse === undefined) {
+            communityStatsResponse = {
+                isError: false,
+                error: null,
+                communityStats: response.data.matchedUser.profile
+            }
+        }
+        return communityStatsResponse
+    }
+
+    static async getUserContestRankingHistory(username: string): Promise<ContestRankingHistoryResponse> {
+        const invalidUsernameResponse: ErrorResponse = getInvalidUsernameErrorResponse(username)
+        if (invalidUsernameResponse !== null) {
+            return {
+                isError: true,
+                error: invalidUsernameResponse,
+                contestRankingHistory: null
+            }
+        }
+        let contestRankingHistoryResponse: ContestRankingHistoryResponse
+        const response: { data: UserContestRankingHistory } = await apolloClient.query<UserContestRankingHistory>({
+            query: getUserContestRankingHistoryQuery(),
+            variables: { "username": username }
+        }).catch(err => {
+            contestRankingHistoryResponse = {
+                isError: true,
+                error: {
+                    errorCode: 500,
+                    errorMessage: `An error occurred while retrieving user contest ranking history - ${err}. Please inform the developer.`
+                },
+                contestRankingHistory: null
+            }
+            return null
+        })
+        if (contestRankingHistoryResponse === undefined) {
+            contestRankingHistoryResponse = {
+                isError: false,
+                error: null,
+                contestRankingHistory: response.data.userContestRankingHistory
+            }
+        }
+        return contestRankingHistoryResponse
+    }
+
+    static async getUserContestRanking(username: string): Promise<ContestRankingResponse> {
+        const invalidUsernameResponse: ErrorResponse = getInvalidUsernameErrorResponse(username)
+        if (invalidUsernameResponse !== null) {
+            return {
+                isError: true,
+                error: invalidUsernameResponse,
+                contestRanking: null
+            }
+        }
+        let contestRankingResponse: ContestRankingResponse
+        const response: { data: UserContestRanking } = await apolloClient.query<UserContestRanking>({
+            query: getUserContestRankingQuery(),
+            variables: { "username": username }
+        }).catch(err => {
+            contestRankingResponse = {
+                isError: true,
+                error: {
+                    errorCode: 500,
+                    errorMessage: `An error occurred while retrieving user contest ranking - ${err}. Please inform the developer.`
+                },
+                contestRanking: null
+            }
+            return null
+        })
+        if (contestRankingResponse === undefined) {
+            contestRankingResponse = {
+                isError: false,
+                error: null,
+                contestRanking: response.data.userContestRanking
+            }
+        }
+        return contestRankingResponse
     }
 
 }

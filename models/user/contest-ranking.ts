@@ -17,7 +17,7 @@ export interface UserContestRanking {
     userContestRanking: ContestRanking
 }
 
-export interface ContestRankingHistoryResponse {
+export interface ContestRankingResponse {
     isError: boolean
     error?: ErrorResponse
     contestRanking: ContestRanking
