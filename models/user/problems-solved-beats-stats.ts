@@ -9,11 +9,11 @@ export interface ProblemsSolvedBeatsStats {
     problemsSolvedBeatsStats: BeatsStats[]
 }
 
-export interface SubmitStatsMatchedUser {
+export interface ProblemsSolvedBeatsStatsMatchedUser {
     matchedUser: ProblemsSolvedBeatsStats
 }
 
-export interface SubmitStatsResponse {
+export interface ProblemsSolvedBeatsStatsResponse {
     isError: boolean
     error?: ErrorResponse
     problemsSolvedBeatsStats: BeatsStats[]

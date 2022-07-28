@@ -10,6 +10,12 @@ import { ContestRankingHistoryResponse, UserContestRankingHistory } from "../mod
 import { getUserContestRankingHistoryQuery } from "../graphql/user/contest-ranking-history.graphql"
 import { ContestRankingResponse, UserContestRanking } from "../models/user/contest-ranking"
 import { getUserContestRankingQuery } from "../graphql/user/contest-ranking.graphql"
+import { DiscussionsResponse, UserCategoryTopics } from "../models/user/discussions"
+import { LanguagesMatchedUser, LanguagesResponse } from "../models/user/languages"
+import { getUserDiscussionsQuery } from "../graphql/user/discussions.graphql"
+import { getUserLanguagesQuery } from "../graphql/user/languages.graphql"
+import { ProblemsSolvedBeatsStatsMatchedUser, ProblemsSolvedBeatsStatsResponse } from "../models/user/problems-solved-beats-stats"
+import { getUserProblemsSolvedBeatsStatsQuery } from "../graphql/user/problems-solved-beats-stats.graphql"
 
 function getInvalidUsernameErrorResponse(username: string): ErrorResponse {
     let errorResponse: ErrorResponse
@@ -192,6 +198,108 @@ export class UserService {
             }
         }
         return contestRankingResponse
+    }
+
+    static async getUserDiscussions(username: string, first?: number, skip?: number): Promise<DiscussionsResponse> {
+        const invalidUsernameResponse: ErrorResponse = getInvalidUsernameErrorResponse(username)
+        if (invalidUsernameResponse !== null) {
+            return {
+                isError: true,
+                error: invalidUsernameResponse,
+                discussions: null
+            }
+        }
+        let discussionsResponse: DiscussionsResponse
+        const response: { data: UserCategoryTopics } = await apolloClient.query<UserCategoryTopics>({
+            query: getUserDiscussionsQuery(),
+            variables: { "username": username, "first": first, "skip": skip }
+        }).catch(err => {
+            discussionsResponse = {
+                isError: true,
+                error: {
+                    errorCode: 500,
+                    errorMessage: `An error occurred while retrieving user discussions - ${err}. Please inform the developer.`
+                },
+                discussions: null
+            }
+            return null
+        })
+        if (discussionsResponse === undefined) {
+            discussionsResponse = {
+                isError: false,
+                error: null,
+                discussions: response.data.userCategoryTopics
+            }
+        }
+        return discussionsResponse
+    }
+
+    static async getUserLanguages(username: string): Promise<LanguagesResponse> {
+        const invalidUsernameResponse: ErrorResponse = getInvalidUsernameErrorResponse(username)
+        if (invalidUsernameResponse !== null) {
+            return {
+                isError: true,
+                error: invalidUsernameResponse,
+                languages: null
+            }
+        }
+        let languagesResponse: LanguagesResponse
+        const response: { data: LanguagesMatchedUser } = await apolloClient.query<LanguagesMatchedUser>({
+            query: getUserLanguagesQuery(),
+            variables: { "username": username }
+        }).catch(err => {
+            languagesResponse = {
+                isError: true,
+                error: {
+                    errorCode: 500,
+                    errorMessage: `An error occurred while retrieving user languages - ${err}. Please inform the developer.`
+                },
+                languages: null
+            }
+            return null
+        })
+        if (languagesResponse === undefined) {
+            languagesResponse = {
+                isError: false,
+                error: null,
+                languages: response.data.matchedUser.languageProblemCount
+            }
+        }
+        return languagesResponse
+    }
+
+    static async getUserProblemsSolvedBeatsStats(username: string): Promise<ProblemsSolvedBeatsStatsResponse> {
+        const invalidUsernameResponse: ErrorResponse = getInvalidUsernameErrorResponse(username)
+        if (invalidUsernameResponse !== null) {
+            return {
+                isError: true,
+                error: invalidUsernameResponse,
+                problemsSolvedBeatsStats: null
+            }
+        }
+        let problemsSolvedBeatsStatsResponse: ProblemsSolvedBeatsStatsResponse
+        const response: { data: ProblemsSolvedBeatsStatsMatchedUser } = await apolloClient.query<ProblemsSolvedBeatsStatsMatchedUser>({
+            query: getUserProblemsSolvedBeatsStatsQuery(),
+            variables: { "username": username }
+        }).catch(err => {
+            problemsSolvedBeatsStatsResponse = {
+                isError: true,
+                error: {
+                    errorCode: 500,
+                    errorMessage: `An error occurred while retrieving user problems solved beats stats - ${err}. Please inform the developer.`
+                },
+                problemsSolvedBeatsStats: null
+            }
+            return null
+        })
+        if (problemsSolvedBeatsStatsResponse === undefined) {
+            problemsSolvedBeatsStatsResponse = {
+                isError: false,
+                error: null,
+                problemsSolvedBeatsStats: response.data.matchedUser.problemsSolvedBeatsStats
+            }
+        }
+        return problemsSolvedBeatsStatsResponse
     }
 
 }
