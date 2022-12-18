@@ -1,5 +1,5 @@
 import { getUserProfileQuery } from "../graphql/user/profile.graphql"
-import { getAllQuestionsCountQuery } from "../graphql/questions/questions.graphql"
+import { getAllQuestionsCountQuery } from "../graphql/problems/total.graphql"
 import { AllQuestionsCount } from "../models-old/allQuestionsCount"
 import { MatchedUser } from "../models-old/matchedUser"
 import { apolloClient } from "./apollo.service"
