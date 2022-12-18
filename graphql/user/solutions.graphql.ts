@@ -3,7 +3,7 @@ import gql from "graphql-tag"
 
 export function getUserSolutionsQuery(): DocumentNode {
     return gql`
-        query getUserSolutionsQuery($username: String!, $skip: Int, $first: Int) {
+        query getUserSolutions($username: String!, $skip: Int, $first: Int) {
             userSolutionTopics(username: $username, skip: $skip, first: $first) {
                 pageInfo {
                     hasNextPage
