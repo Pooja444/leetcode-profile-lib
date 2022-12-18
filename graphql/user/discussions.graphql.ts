@@ -3,7 +3,7 @@ import gql from "graphql-tag"
 
 export function getUserDiscussionsQuery(): DocumentNode {
     return gql`
-        query getUserDiscussionsQuery($username: String!, $first: Int, $skip: Int) {
+        query getUserDiscussions($username: String!, $first: Int, $skip: Int) {
             userCategoryTopics(username: $username, first: $first, skip: $skip) {
                 pageInfo {
                     hasNextPage

@@ -16,6 +16,10 @@ import { getUserDiscussionsQuery } from "../graphql/user/discussions.graphql"
 import { getUserLanguagesQuery } from "../graphql/user/languages.graphql"
 import { ProblemsSolvedBeatsStatsMatchedUser, ProblemsSolvedBeatsStatsResponse } from "../models/user/problems-solved-beats-stats"
 import { getUserProblemsSolvedBeatsStatsQuery } from "../graphql/user/problems-solved-beats-stats.graphql"
+import { ProfileMatchedUser, ProfileResponse } from "../models/user/profile"
+import { getUserProfileQuery } from "../graphql/user/profile.graphql"
+import { RecentSubmissionsAcList, RecentSubmissionsResponse } from "../models/user/recent-submissions"
+import { getUserRecentSubmissionsQuery } from "../graphql/user/recent-submissions.graphql"
 
 function getInvalidUsernameErrorResponse(username: string): ErrorResponse {
     let errorResponse: ErrorResponse
@@ -300,6 +304,103 @@ export class UserService {
             }
         }
         return problemsSolvedBeatsStatsResponse
+    }
+
+    static async getUserProfile(username: string): Promise<ProfileResponse> {
+        const invalidUsernameResponse: ErrorResponse = getInvalidUsernameErrorResponse(username)
+        if (invalidUsernameResponse !== null) {
+            return {
+                isError: true,
+                error: invalidUsernameResponse,
+                profile: null
+            }
+        }
+        let profileResponse: ProfileResponse
+        const response: { data: ProfileMatchedUser } = await apolloClient.query<ProfileMatchedUser>({
+            query: getUserProfileQuery(),
+            variables: { "username": username }
+        }).catch(err => {
+            profileResponse = {
+                isError: true,
+                error: {
+                    errorCode: 500,
+                    errorMessage: `An error occurred while retrieving user profile - ${err}. Please inform the developer.`
+                },
+                profile: null
+            }
+            return null
+        })
+        if (profileResponse === undefined) {
+            profileResponse = {
+                isError: false,
+                error: null,
+                profile: response.data.matchedUser.profile
+            }
+        }
+        return profileResponse
+    }
+
+    static async getUserRecentSubmissions(username: string, limit?: string): Promise<RecentSubmissionsResponse> {
+        const invalidUsernameResponse: ErrorResponse = getInvalidUsernameErrorResponse(username)
+        if (invalidUsernameResponse !== null) {
+            return {
+                isError: true,
+                error: invalidUsernameResponse,
+                recentSubmissions: null
+            }
+        }
+        let recentSubmissionsResponse: RecentSubmissionsResponse
+        let variables = {
+            "username": username
+        }
+        if (limit !== undefined) {
+            let limitValue = Number(limit)
+            if (isNaN(limitValue)) {
+                recentSubmissionsResponse = {
+                    isError: true,
+                    error: {
+                        errorCode: 400,
+                        errorMessage: `The provided limit value ${limit} is not a number, please provide a correct limit numeric value greater than zero`
+                    },
+                    recentSubmissions: null
+                }
+                return recentSubmissionsResponse
+            }
+            if (limitValue <= 0) {
+                recentSubmissionsResponse = {
+                    isError: true,
+                    error: {
+                        errorCode: 400,
+                        errorMessage: `The provided limit value should be greater than zero, but you have provided ${limit}`
+                    },
+                    recentSubmissions: null
+                }
+                return recentSubmissionsResponse
+            }
+            variables["limit"] = limit
+        }
+        const response: { data: RecentSubmissionsAcList } = await apolloClient.query<RecentSubmissionsAcList>({
+            query: getUserRecentSubmissionsQuery(),
+            variables: variables
+        }).catch(err => {
+            recentSubmissionsResponse = {
+                isError: true,
+                error: {
+                    errorCode: 500,
+                    errorMessage: `An error occurred while retrieving user recent submissions - ${err}. Please inform the developer.`
+                },
+                recentSubmissions: null
+            }
+            return null
+        })
+        if (recentSubmissionsResponse === undefined) {
+            recentSubmissionsResponse = {
+                isError: false,
+                error: null,
+                recentSubmissions: response.data.recentAcSubmissionList
+            }
+        }
+        return recentSubmissionsResponse
     }
 
 }

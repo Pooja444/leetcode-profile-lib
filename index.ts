@@ -15,6 +15,8 @@ import { ContestRankingResponse } from './models/user/contest-ranking'
 import { DiscussionsResponse } from './models/user/discussions'
 import { LanguagesResponse } from './models/user/languages'
 import { ProblemsSolvedBeatsStatsResponse } from './models/user/problems-solved-beats-stats'
+import { ProfileResponse } from './models/user/profile'
+import { RecentSubmissionsResponse } from './models/user/recent-submissions'
 
 export async function getUserBadges(req: { params: { username: string } }, res: { send: (arg0: BadgeResponse) => void }) {
     res.send(await UserService.getUserBadges(req.params.username))
@@ -50,6 +52,14 @@ export async function getUserLanguages(req: { params: { username: string } }, re
 
 export async function getUserProblemsSolvedBeatsStats(req: { params: { username: string } }, res: { send: (arg0: ProblemsSolvedBeatsStatsResponse) => void }) {
     res.send(await UserService.getUserProblemsSolvedBeatsStats(req.params.username))
+}
+
+export async function getUserProfile(req: { params: { username: string } }, res: { send: (arg0: ProfileResponse) => void }) {
+    res.send(await UserService.getUserProfile(req.params.username))
+}
+
+export async function getUserRecentSubmissions(req: { params: { username: string }, query: { limit: string } }, res: { send: (arg0: RecentSubmissionsResponse) => void }) {
+    res.send(await UserService.getUserRecentSubmissions(req.params.username, req.query.limit))
 }
 
 export async function getLeetQuestionsCount(req: any, res: { send: (arg0: QuestionsResponse) => void }) {
@@ -89,6 +99,8 @@ app.get('/user/:username/contest-ranking', getUserContestRanking)
 app.get('/user/:username/discussions', getUserDiscussions)
 app.get('/user/:username/languages', getUserLanguages)
 app.get('/user/:username/problems-solved-beats-stats', getUserProblemsSolvedBeatsStats)
+app.get('/user/:username/profile', getUserProfile)
+app.get('/user/:username/recent-submissions', getUserRecentSubmissions)
 
 const port = 3200
 

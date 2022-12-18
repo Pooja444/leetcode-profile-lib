@@ -3,7 +3,7 @@ import gql from "graphql-tag"
 
 export function getUserProblemsSolvedBeatsStatsQuery(): DocumentNode {
     return gql`
-        query getUserProblemsSolvedBeatsStatsQuery($username: String!) {
+        query getUserProblemsSolvedBeatsStats($username: String!) {
                 matchedUser(username: $username) {
                     problemsSolvedBeatsStats {
                         difficulty
