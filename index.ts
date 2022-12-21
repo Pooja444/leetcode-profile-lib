@@ -3,10 +3,6 @@ import { AllQuestionsCount } from './models-old/allQuestionsCount'
 import { QuestionsResponse } from './models-old/response'
 import { LeetProfileService } from './services/leetprofile.service'
 
-// Delete below 2 imports later
-import express from 'express'
-import cors from 'cors'
-
 import { UserService } from './services/user.service'
 
 import * as resp from './models/user'
