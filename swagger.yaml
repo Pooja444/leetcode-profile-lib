@@ -1,0 +1,126 @@
+openapi: 3.0.3
+info:
+  title: Swagger Petstore - OpenAPI 3.0
+  description: |-
+    This server provides a number of useful endpoints that expose public leetcode.com data, e.g. all users' information, questions, etc. This information is something
+    you would find without the need to log in to your leetcode account. You could use this public information in many ways, e.g. displaying your leetcode statistics on your
+    personal website, perform data analytics on the public information, etc.
+  contact:
+    email: poojakulkarni562@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.2.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: https://leetprofile-server.onrender.com
+tags:
+  - name: user
+    description: All information that is associated with a leetcode user
+  - name: question
+    description: All questions related data
+paths:
+  /user/{username}/profile:
+    get:
+      tags:
+        - user
+      summary: Get user profile data
+      description: Get user profile data by username
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+        "400":
+          description: Invalid username supplied. Username can only contain digits or alphabets
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfileError"
+        "500":
+          description: Unknown error occurred while retrieving user profile, need to connect with the developer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfileError"
+components:
+  schemas:
+    ErrorResponseNone:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+          example: null
+        errorMessage:
+          type: string
+          example: null
+    ErrorResponseExists:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+          example: 111
+        errorMessage:
+          type: string
+          example: "Something went wrong"
+    UserProfile:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: false
+        error:
+          type: object
+          example: null
+        profile:
+          type: object
+          properties:
+            realName:
+              type: string
+              example: Jane Doe
+            websites:
+              type: array
+              items:
+                type: string
+              example: ["https://www.google.com", "https://www.npmjs.com/"]
+            countryName:
+              type: string
+              example: USA
+            skillTags:
+              type: array
+              items:
+                type: string
+              example: ["Java", "C++", "Python", "DP"]
+            company:
+              type: string
+              example: Salesforce, Inc.
+            school:
+              type: string
+              example: Arizona State University
+            starRating:
+              type: number
+              example: 4.5
+            aboutMe:
+              type: string
+              example: "Something about me goes here"
+            userAvatar:
+              type: string
+              example: https://assets.leetcode.com/users/some-user/some-avatar.png
+            ranking:
+              type: number
+              example: 1000
+    UserProfileError:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponseExists"
+        profile:
+          type: object
+          example: null
