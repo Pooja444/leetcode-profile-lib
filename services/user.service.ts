@@ -20,18 +20,15 @@ import { ProfileMatchedUser, ProfileResponse } from "../models/user/profile"
 import { getUserProfileQuery } from "../graphql/user/profile.graphql"
 import { RecentSubmissionsAcList, RecentSubmissionsResponse } from "../models/user/recent-submissions"
 import { getUserRecentSubmissionsQuery } from "../graphql/user/recent-submissions.graphql"
-
-function getInvalidUsernameErrorResponse(username: string): ErrorResponse {
-    let errorResponse: ErrorResponse
-    if (!username.match(/^[0-9A-Za-z]+$/)) {
-        errorResponse = {
-            errorCode: 400,
-            errorMessage: `Invalid username ${username}. Username can only contain digits or alphabets`
-        }
-        return errorResponse
-    }
-    return null
-}
+import { SkillsMatchedUser, SkillsResponse } from "../models/user/skills"
+import { getUserSkillsQuery } from "../graphql/user/skills.graphql"
+import { SocialMatchedUer, SocialResponse } from "../models/user/social"
+import { getUserSocialQuery } from "../graphql/user/social.graphql"
+import { checkValidNum, getInvalidUsernameErrorResponse } from "../utils"
+import { SolutionsResponse, UserSolutionTopics } from "../models/user/solutions"
+import { getUserSolutionsQuery } from "../graphql/user/solutions.graphql"
+import { SubmitStatsMatchedUser, SubmitStatsResponse } from "../models/user/submit-stats"
+import { getUserSubmitStatsQuery } from "../graphql/user/submit-stats.graphql"
 
 export class UserService {
     static async getUserBadges(username: string): Promise<BadgeResponse> {
@@ -353,32 +350,18 @@ export class UserService {
         let variables = {
             "username": username
         }
-        if (limit !== undefined) {
-            let limitValue = Number(limit)
-            if (isNaN(limitValue)) {
-                recentSubmissionsResponse = {
-                    isError: true,
-                    error: {
-                        errorCode: 400,
-                        errorMessage: `The provided limit value ${limit} is not a number, please provide a correct limit numeric value greater than zero`
-                    },
-                    recentSubmissions: null
-                }
-                return recentSubmissionsResponse
+
+        let limitErrorResponse: ErrorResponse = checkValidNum(limit, "limit")
+        if (limitErrorResponse !== null) {
+            return {
+                isError: true,
+                error: limitErrorResponse,
+                recentSubmissions: null
             }
-            if (limitValue <= 0) {
-                recentSubmissionsResponse = {
-                    isError: true,
-                    error: {
-                        errorCode: 400,
-                        errorMessage: `The provided limit value should be greater than zero, but you have provided ${limit}`
-                    },
-                    recentSubmissions: null
-                }
-                return recentSubmissionsResponse
-            }
+        } else {
             variables["limit"] = limit
         }
+
         const response: { data: RecentSubmissionsAcList } = await apolloClient.query<RecentSubmissionsAcList>({
             query: getUserRecentSubmissionsQuery(),
             variables: variables
@@ -401,6 +384,159 @@ export class UserService {
             }
         }
         return recentSubmissionsResponse
+    }
+
+    static async getUserSkills(username: string): Promise<SkillsResponse> {
+        const invalidUsernameResponse: ErrorResponse = getInvalidUsernameErrorResponse(username)
+        if (invalidUsernameResponse !== null) {
+            return {
+                isError: true,
+                error: invalidUsernameResponse,
+                skills: null
+            }
+        }
+        let skillsResponse: SkillsResponse
+        const response: { data: SkillsMatchedUser } = await apolloClient.query<SkillsMatchedUser>({
+            query: getUserSkillsQuery(),
+            variables: { "username": username }
+        }).catch(err => {
+            skillsResponse = {
+                isError: true,
+                error: {
+                    errorCode: 500,
+                    errorMessage: `An error occurred while retrieving user skills - ${err}. Please inform the developer.`
+                },
+                skills: null
+            }
+            return null
+        })
+        if (skillsResponse === undefined) {
+            skillsResponse = {
+                isError: false,
+                error: null,
+                skills: response.data.matchedUser.tagProblemCounts
+            }
+        }
+        return skillsResponse
+    }
+
+    static async getUserSocial(username: string): Promise<SocialResponse> {
+        const invalidUsernameResponse: ErrorResponse = getInvalidUsernameErrorResponse(username)
+        if (invalidUsernameResponse !== null) {
+            return {
+                isError: true,
+                error: invalidUsernameResponse,
+                social: null
+            }
+        }
+        let socialResponse: SocialResponse
+        const response: { data: SocialMatchedUer } = await apolloClient.query<SocialMatchedUer>({
+            query: getUserSocialQuery(),
+            variables: { "username": username }
+        }).catch(err => {
+            socialResponse = {
+                isError: true,
+                error: {
+                    errorCode: 500,
+                    errorMessage: `An error occurred while retrieving user's social details - ${err}. Please inform the developer.`
+                },
+                social: null
+            }
+            return null
+        })
+        if (socialResponse === undefined) {
+            socialResponse = {
+                isError: false,
+                error: null,
+                social: response.data.matchedUser
+            }
+        }
+        return socialResponse
+    }
+
+    static async getUserSolutions(username: string, skip?: string, first?: string): Promise<SolutionsResponse> {
+        const invalidUsernameResponse: ErrorResponse = getInvalidUsernameErrorResponse(username)
+        if (invalidUsernameResponse !== null) {
+            return {
+                isError: true,
+                error: invalidUsernameResponse,
+                solutions: null
+            }
+        }
+        let solutionsResponse: SolutionsResponse
+        let variables = {
+            "username": username
+        }
+
+        let skipErrorResponse: ErrorResponse = checkValidNum(skip, "skip")
+        let firstErrorResponse: ErrorResponse = checkValidNum(first, "first")
+        if (skipErrorResponse !== null || firstErrorResponse !== null) {
+            return {
+                isError: true,
+                error: skipErrorResponse ?? firstErrorResponse,
+                solutions: null
+            }
+        } else {
+            variables["skip"] = skip
+            variables["first"] = first
+        }
+
+        const response: { data: UserSolutionTopics } = await apolloClient.query<UserSolutionTopics>({
+            query: getUserSolutionsQuery(),
+            variables: variables
+        }).catch(err => {
+            solutionsResponse = {
+                isError: true,
+                error: {
+                    errorCode: 500,
+                    errorMessage: `An error occurred while retrieving user solutions - ${err}. Please inform the developer.`
+                },
+                solutions: null
+            }
+            return null
+        })
+        if (solutionsResponse === undefined) {
+            solutionsResponse = {
+                isError: false,
+                error: null,
+                solutions: response.data.userSolutionTopics
+            }
+        }
+        return solutionsResponse
+    }
+
+    static async getUserSubmitStats(username: string): Promise<SubmitStatsResponse> {
+        const invalidUsernameResponse: ErrorResponse = getInvalidUsernameErrorResponse(username)
+        if (invalidUsernameResponse !== null) {
+            return {
+                isError: true,
+                error: invalidUsernameResponse,
+                submitStats: null
+            }
+        }
+        let submitStatsResponse: SubmitStatsResponse
+        const response: { data: SubmitStatsMatchedUser } = await apolloClient.query<SubmitStatsMatchedUser>({
+            query: getUserSubmitStatsQuery(),
+            variables: { "username": username }
+        }).catch(err => {
+            submitStatsResponse = {
+                isError: true,
+                error: {
+                    errorCode: 500,
+                    errorMessage: `An error occurred while retrieving user's submit stats - ${err}. Please inform the developer.`
+                },
+                submitStats: null
+            }
+            return null
+        })
+        if (submitStatsResponse === undefined) {
+            submitStatsResponse = {
+                isError: false,
+                error: null,
+                submitStats: response.data.matchedUser.submitStats
+            }
+        }
+        return submitStatsResponse
     }
 
 }
