@@ -28,6 +28,13 @@ paths:
         - user
       summary: Get user profile data
       description: Get user profile data by username
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+          description: The username of the user whose data is to be requested
       responses:
         "200":
           description: Successful operation
@@ -40,13 +47,309 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserProfileError"
+                $ref: "#/components/schemas/UserProfile400Error"
         "500":
           description: Unknown error occurred while retrieving user profile, need to connect with the developer
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserProfileError"
+                $ref: "#/components/schemas/UserProfile500Error"
+  /user/{username}/badges:
+    get:
+      tags:
+        - user
+      summary: Get user badges data
+      description: Get user badges data by username
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+          description: The username of the user whose data is to be requested
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserBadges"
+        "400":
+          description: Invalid username supplied. Username can only contain digits or alphabets
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserBadges400Error"
+        "500":
+          description: Unknown error occurred while retrieving user badges, need to connect with the developer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserBadges500Error"
+  /user/{username}/calendar:
+    get:
+      tags:
+        - user
+      summary: Get user calendar data
+      description: Get user calendar data by username
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+          description: The username of the user whose data is to be requested
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserCalendar"
+        "400":
+          description: Invalid username supplied. Username can only contain digits or alphabets
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserCalendar400Error"
+        "500":
+          description: Unknown error occurred while retrieving user calendar, need to connect with the developer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserCalendar500Error"
+  /user/{username}/community-stats:
+    get:
+      tags:
+        - user
+      summary: Get user community stats data
+      description: Get user community stats data by username
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+          description: The username of the user whose data is to be requested
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserCommunityStats"
+        "400":
+          description: Invalid username supplied. Username can only contain digits or alphabets
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserCommunityStats400Error"
+        "500":
+          description: Unknown error occurred while retrieving user community stats, need to connect with the developer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserCommunityStats500Error"
+  /user/{username}/contest-ranking-history:
+    get:
+      tags:
+        - user
+      summary: Get user contest ranking history data
+      description: Get user contest ranking history data by username
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+          description: The username of the user whose data is to be requested
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserContestRankingHistory"
+        "400":
+          description: Invalid username supplied. Username can only contain digits or alphabets
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserContestRankingHistory400Error"
+        "500":
+          description: Unknown error occurred while retrieving user contest ranking history, need to connect with the developer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserContestRankingHistory500Error"
+  /user/{username}/contest-ranking:
+    get:
+      tags:
+        - user
+      summary: Get user contest ranking data
+      description: Get user contest ranking data by username
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+          description: The username of the user whose data is to be requested
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserContestRanking"
+        "400":
+          description: Invalid username supplied. Username can only contain digits or alphabets
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserContestRanking400Error"
+        "500":
+          description: Unknown error occurred while retrieving user contest ranking, need to connect with the developer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserContestRanking500Error"
+  /user/{username}/discussions:
+    get:
+      tags:
+        - user
+      summary: Get user discussions data
+      description: Get user discussions data by username
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+          description: The username of the user whose data is to be requested
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDiscussions"
+        "400":
+          description: Invalid username supplied. Username can only contain digits or alphabets
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDiscussions400Error"
+        "500":
+          description: Unknown error occurred while retrieving user discussions, need to connect with the developer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDiscussions500Error"
+  /user/{username}/languages:
+    get:
+      tags:
+        - user
+      summary: Get user languages data
+      description: Get user languages data by username
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+          description: The username of the user whose data is to be requested
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserLanguages"
+        "400":
+          description: Invalid username supplied. Username can only contain digits or alphabets
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserLanguages400Error"
+        "500":
+          description: Unknown error occurred while retrieving user languages, need to connect with the developer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserLanguages500Error"
+  /user/{username}/problems-solved-beats-stats:
+    get:
+      tags:
+        - user
+      summary: Get user data that shows how the solved problems have beat other users' stats
+      description: Get user data that shows how the solved problems have beat other users' stats by username
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+          description: The username of the user whose data is to be requested
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProblemsSolvedBeatsStats"
+        "400":
+          description: Invalid username supplied. Username can only contain digits or alphabets
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProblemsSolvedBeatsStats400Error"
+        "500":
+          description: Unknown error occurred while retrieving user problems solved beats stats, need to connect with the developer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProblemsSolvedBeatsStats500Error"
+  /user/{username}/recent-submissions:
+    get:
+      tags:
+        - user
+      summary: Get user recent submissions data
+      description: Get user recent submissions data by username
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+          description: The username of the user whose data is to be requested
+        - in: query
+          name: limit
+          required: false
+          minimum: 0
+          schema:
+            type: integer
+          description: The limit of recent submissions to be returned
+          example: 5
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserRecentSubmissions"
+        "400":
+          description: Invalid username supplied. Username can only contain digits or alphabets
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserRecentSubmissions400Error"
+        "500":
+          description: Unknown error occurred while retrieving user problems solved beats stats, need to connect with the developer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserRecentSubmissions500Error"
 components:
   schemas:
     ErrorResponseNone:
@@ -58,15 +361,24 @@ components:
         errorMessage:
           type: string
           example: null
-    ErrorResponseExists:
+    ErrorResponse400:
       type: object
       properties:
         errorCode:
           type: integer
-          example: 111
+          example: 400
         errorMessage:
           type: string
-          example: "Something went wrong"
+          example: "Invalid username supplied. Username can only contain digits or alphabets"
+    ErrorResponse500:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+          example: 500
+        errorMessage:
+          type: string
+          example: "Unknown error occurred while retrieving user <property>, need to connect with the developer"
     UserProfile:
       type: object
       properties:
@@ -113,14 +425,561 @@ components:
             ranking:
               type: number
               example: 1000
-    UserProfileError:
+    UserProfile400Error:
       type: object
       properties:
         isError:
           type: boolean
           example: true
         error:
-          $ref: "#/components/schemas/ErrorResponseExists"
+          $ref: "#/components/schemas/ErrorResponse400"
         profile:
+          type: object
+          example: null
+    UserProfile500Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse500"
+        profile:
+          type: object
+          example: null
+    UserBadges:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: false
+        error:
+          type: object
+          example: null
+        badgeTypes:
+          type: object
+          properties:
+            badges:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 1281002
+                  name:
+                    type: string
+                    example: "Knight"
+                  shortName:
+                    type: string
+                    example: "Knight"
+                  displayName:
+                    type: string
+                    example: "Knight"
+                  icon:
+                    type: string
+                    example: "/static/images/badges/knight.png"
+                  hoverText:
+                    type: string
+                    example: "Knight Top 25% site-wide\n(10785 total)"
+                  medal:
+                    type: object
+                    properties:
+                      slug:
+                        type: string
+                        example: "knight"
+                      config:
+                        type: object
+                        properties:
+                          iconGif:
+                            type: string
+                            example: "https://assets.leetcode.com/static_assets/others/Knight.gif"
+                          iconGifBackground:
+                            type: string
+                            example: "https://assets.leetcode.com/static_assets/others/badge-background.png"
+                  creationDate:
+                    type: string
+                    format: date
+                    example: "2022-12-21"
+                  category:
+                    type: string
+                    example: "COMPETITION"
+            upcomingBadges:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Jan LeetCoding Challenge
+                  icon:
+                    type: string
+                    example: "/static/images/badges/dcc-2023-1.png"
+                  progress:
+                    type: number
+                    example: 0
+    UserBadges400Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse400"
+        badgeTypes:
+          type: object
+          example: null
+    UserBadges500Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse500"
+        badgeTypes:
+          type: object
+          example: null
+    UserCalendar:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: false
+        error:
+          type: object
+          example: null
+        calendar:
+          type: object
+          properties:
+            activeYears:
+              type: array
+              items:
+                type: integer
+              example: [2019, 2020, 2021, 2022]
+            streak:
+              type: integer
+              example: 10
+            totalActiveDays:
+              type: integer
+              example: 50
+            dccBadges:
+              type: array
+              items:
+                type: object
+                properties:
+                  timestamp:
+                    type: number
+                    example: 1640995200
+                  badge:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: "Daily Coding Challenge"
+                      icon:
+                        type: string
+                        example: "/static/images/badges/dcc-2022-1.png"
+            submissionCalendar:
+              type: string
+              example: '{"1640995200": 1, "1641081600": 1, "1641168000": 1, "1641254400": 1, "1641340800": 1}'
+    UserCalendar400Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse400"
+        calendar:
+          type: object
+          example: null
+    UserCalendar500Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse500"
+        calendar:
+          type: object
+          example: null
+    UserCommunityStats:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: false
+        error:
+          type: object
+          example: null
+        communityStats:
+          type: object
+          properties:
+            reputation:
+              type: number
+              example: integer
+            reputationDiff:
+              type: integer
+              example: 0
+            postViewCount:
+              type: integer
+              example: 3309
+            postViewCountDiff:
+              type: integer
+              example: 8
+            solutionCount:
+              type: integer
+              example: 30
+            solutionCountDiff:
+              type: integer
+              example: 0
+            categoryDiscussCount:
+              type: integer
+              example: 1
+            categoryDiscussCountDiff:
+              type: integer
+              example: 0
+    UserCommunityStats400Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse400"
+        communityStats:
+          type: object
+          example: null
+    UserCommunityStats500Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse500"
+        communityStats:
+          type: object
+          example: null
+    UserContestRankingHistory:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: false
+        error:
+          type: object
+          example: null
+        contestRankingHistory:
+          type: object
+          properties:
+            attended:
+              type: boolean
+              example: false
+            trendDirection:
+              type: string
+              example: "NONE"
+            problemsSolved:
+              type: number
+              example: 0
+            totalProblems:
+              type: number
+              example: 3
+            finishTimeInSeconds:
+              type: number
+              example: 0
+            starRating:
+              type: number
+              example: 1500
+            ranking:
+              type: number
+              example: 0
+            contest:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: "Weekly Contest 2"
+                startTime:
+                  type: number
+                  example: 1472347800
+    UserContestRankingHistory400Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse400"
+        contestRankingHistory:
+          type: object
+          example: null
+    UserContestRankingHistory500Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse500"
+        contestRankingHistory:
+          type: object
+          example: null
+    UserContestRanking:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: false
+        error:
+          type: object
+          example: null
+        contestRanking:
+          type: object
+          properties:
+            attendedContestsCount:
+              type: integer
+              example: 87
+            rating:
+              type: number
+              example: 1427.36
+            globalRanking:
+              type: integer
+              example: 10148
+            totalParticipants:
+              type: integer
+              example: 348087
+            topPercentage:
+              type: number
+              example: 3.09
+            badge:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Knight"
+    UserContestRanking400Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse400"
+        contestRanking:
+          type: object
+          example: null
+    UserContestRanking500Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse500"
+        contestRanking:
+          type: object
+          example: null
+    UserDiscussions:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: false
+        error:
+          type: object
+          example: null
+        discussions:
+          type: object
+          properties:
+            pageInfo:
+              type: object
+              properties:
+                hasNextPage:
+                  type: boolean
+                  example: false
+            edges:
+              type: array
+              items:
+                type: object
+                properties:
+                  node:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: "2958859"
+                      title:
+                        type: string
+                        example: "Interview at Google"
+                      url:
+                        type: string
+                        example: "/discuss/topic/2958859/interview-at-google"
+                      viewCount:
+                        type: integer
+                        example: 100
+                      post:
+                        type: object
+                        properties:
+                          creationDate:
+                            type: number
+                            example: 1672155333
+                          voteCount:
+                            type: integer
+                            example: 10
+    UserDiscussions400Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse400"
+        discussions:
+          type: object
+          example: null
+    UserDiscussions500Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse500"
+        discussions:
+          type: object
+          example: null
+    UserLanguages:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: false
+        error:
+          type: object
+          example: null
+        languages:
+          type: array
+          items:
+            type: object
+            properties:
+              languageName:
+                type: string
+                example: "Java"
+              problemsSolved:
+                type: integer
+                example: 249
+    UserLanguages400Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse400"
+        languages:
+          type: object
+          example: null
+    UserLanguages500Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse500"
+        languages:
+          type: object
+          example: null
+    UserProblemsSolvedBeatsStats:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: false
+        error:
+          type: object
+          example: null
+        problemsSolvedBeatsStats:
+          type: array
+          items:
+            type: object
+            properties:
+              difficulty:
+                type: string
+                example: "Medium"
+              percentage:
+                type: number
+                example: 92.06
+    UserProblemsSolvedBeatsStats400Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse400"
+        problemsSolvedBeatsStats:
+          type: object
+          example: null
+    UserProblemsSolvedBeatsStats500Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse500"
+        problemsSolvedBeatsStats:
+          type: object
+          example: null
+    UserRecentSubmissions:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: false
+        error:
+          type: object
+          example: null
+        recentSubmissions:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: "824842342"
+              title:
+                type: string
+                example: "Longest Repeating Character Replacement"
+              titleSlug:
+                type: string
+                example: "longest-repeating-character-replacement"
+              timestamp:
+                type: string
+                example: "1666057255"
+    UserRecentSubmissions400Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse400"
+        recentSubmissions:
+          type: object
+          example: null
+    UserRecentSubmissions500Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse500"
+        recentSubmissions:
           type: object
           example: null
