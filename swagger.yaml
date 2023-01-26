@@ -350,6 +350,134 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserRecentSubmissions500Error"
+  /user/{username}/skills:
+    get:
+      tags:
+        - user
+      summary: Get user skills data
+      description: Get user skills data by username
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+          description: The username of the user whose data is to be requested
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserSkills"
+        "400":
+          description: Invalid username supplied. Username can only contain digits or alphabets
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserSkills400Error"
+        "500":
+          description: Unknown error occurred while retrieving user skills, need to connect with the developer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserSkills500Error"
+  /user/{username}/social:
+    get:
+      tags:
+        - user
+      summary: Get user's social data
+      description: Get user's social data by username
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+          description: The username of the user whose data is to be requested
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserSocial"
+        "400":
+          description: Invalid username supplied. Username can only contain digits or alphabets
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserSocial400Error"
+        "500":
+          description: Unknown error occurred while retrieving user's social data, need to connect with the developer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserSocial500Error"
+  /user/{username}/solutions:
+    get:
+      tags:
+        - user
+      summary: Get user solutions data
+      description: Get user solutions data by username
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+          description: The username of the user whose data is to be requested
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserSolutions"
+        "400":
+          description: Invalid username supplied. Username can only contain digits or alphabets
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserSolutions400Error"
+        "500":
+          description: Unknown error occurred while retrieving user's solutions data, need to connect with the developer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserSolutions500Error"
+  /user/{username}/submit-stats:
+    get:
+      tags:
+        - user
+      summary: Get user submission stats data
+      description: Get user submission stats data by username
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+          description: The username of the user whose data is to be requested
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserSubmitStats"
+        "400":
+          description: Invalid username supplied. Username can only contain digits or alphabets
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserSubmitStats400Error"
+        "500":
+          description: Unknown error occurred while retrieving user's submission stats data, need to connect with the developer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserSubmitStats500Error"
 components:
   schemas:
     ErrorResponseNone:
@@ -981,5 +1109,226 @@ components:
         error:
           $ref: "#/components/schemas/ErrorResponse500"
         recentSubmissions:
+          type: object
+          example: null
+    Skill:
+      type: object
+      properties:
+        tagName:
+          type: string
+          example: "Backtracking"
+        tagSlug:
+          type: string
+          example: "backtracking"
+        problemsSolved:
+          type: integer
+          example: 12
+    UserSkills:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: false
+        error:
+          type: object
+          example: null
+        skills:
+          type: object
+          properties:
+            advanced:
+              type: array
+              items:
+                $ref: "#/components/schemas/Skill"
+            intermediate:
+              type: array
+              items:
+                $ref: "#/components/schemas/Skill"
+            fundamental:
+              type: array
+              items:
+                $ref: "#/components/schemas/Skill"
+    UserSkills400Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse400"
+        skills:
+          type: object
+          example: null
+    UserSkills500Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse500"
+        skills:
+          type: object
+          example: null
+    UserSocial:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: false
+        error:
+          type: object
+          example: null
+        social:
+          type: object
+          properties:
+            githubUrl:
+              type: string
+              example: "https://github.com/abcdxyz"
+            twitterUrl:
+              type: string
+              example: "https://twitter.com/zaynmalik"
+            linkedinUrl:
+              type: string
+              example: "https://linkedin.com/in/abcdxyz"
+    UserSocial400Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse400"
+        social:
+          type: object
+          example: null
+    UserSocial500Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse500"
+        social:
+          type: object
+          example: null
+    UserSolutions:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: false
+        error:
+          type: object
+          example: null
+        solutions:
+          type: object
+          properties:
+            pageInfo:
+              type: object
+              properties:
+                hasNextPage:
+                  type: boolean
+                  example: false
+            edges:
+              type: array
+              items:
+                type: object
+                properties:
+                  node:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: "2172362"
+                      title:
+                        type: string
+                        example: "Simple Java solution by identifying pattern (99% better time, 98% better space)"
+                      url:
+                        type: string
+                        example: "/discuss/topic/2172362/simple-java-solution-by-identifying-pattern-99-better-time-98-better-space"
+                      viewCount:
+                        type: integer
+                        example: 88
+                      questionTitle:
+                        type: string
+                        example: "Zigzag Conversion"
+                      post:
+                        type: object
+                        properties:
+                          creationDate:
+                            type: number
+                            example: number
+                          voteCount:
+                            type: number
+                            example: 10
+    UserSolutions400Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse400"
+        solutions:
+          type: object
+          example: null
+    UserSolutions500Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse500"
+        solutions:
+          type: object
+          example: null
+    UserSubmitStats:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: false
+        error:
+          type: object
+          example: null
+        submitStats:
+          type: object
+          properties:
+            acSubmissionNum:
+              type: array
+              items:
+                type: object
+                properties:
+                  difficulty:
+                    type: string
+                    example: "Medium"
+                  count:
+                    type: number
+                    example: 257
+                  submissions:
+                    type: number
+                    example: 1078
+    UserSubmitStats400Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse400"
+        submitStats:
+          type: object
+          example: null
+    UserSubmitStats500Error:
+      type: object
+      properties:
+        isError:
+          type: boolean
+          example: true
+        error:
+          $ref: "#/components/schemas/ErrorResponse500"
+        submitStats:
           type: object
           example: null
