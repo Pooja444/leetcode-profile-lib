@@ -18,10 +18,10 @@ export function checkValidNum(number: any, paramName: string): ErrorResponse {
         if (isNaN(number)) {
             return {
                 errorCode: 400,
-                errorMessage: `The provided ${paramName} value ${number} is not a number, please provide a correct limit numeric value greater than zero`
+                errorMessage: `The provided ${paramName} value ${value} is not a number, please provide a correct limit numeric value greater than zero`
             }
         }
-        if (number < 0) {
+        if (value < 0) {
             return {
                 errorCode: 400,
                 errorMessage: `The provided ${paramName} value should be greater than or equal to zero, but you have provided ${number}`
