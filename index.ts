@@ -31,4 +31,4 @@ export async function getLeetQuestionsCount(req: any, res: { send: (arg0: Questi
     }
 }
 
-export { User } from './requests/user'
+export { User as UserRequests } from './requests/user'
