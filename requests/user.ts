@@ -1,7 +1,7 @@
 import { UserService } from '../services/user.service'
 import * as resp from '../models/user'
 
-class User {
+export class UserRequests {
     static async getUserBadges(req: { params: { username: string } }, res: { send: (arg0: resp.BadgeResponse) => void }) {
         res.send(await UserService.getUserBadges(req.params.username))
     }
@@ -62,5 +62,3 @@ class User {
         res.send(await UserService.getUserSubmitStats(req.params.username))
     }
 }
-
-export { User }
